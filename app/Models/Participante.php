@@ -14,7 +14,7 @@ class Participante extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['nombre', 'celular', 'email', 'estado'];
+    protected $fillable = ['nombre', 'celular', 'email', 'estado', 'qr'];
 
 
 }

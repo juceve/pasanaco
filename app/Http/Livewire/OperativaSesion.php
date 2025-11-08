@@ -7,14 +7,15 @@ use App\Models\Sesioncronograma;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
+
 class OperativaSesion extends Component
 {
-    public $sesion, $procesando = false;
+    public $sesion, $procesando = false, $mostrarReporte = false;
 
     public function mount($id)
     {
         $this->sesion = Sesion::findOrFail($id);
-        if ($this->sesion->estado === 'CREADO' || $this->sesion->estado === 'FINALIZADO' || $this->sesion->estado === 'ANULADO') {
+        if ($this->sesion->estado === 'CREADO' || $this->sesion->estado === 'ANULADO') {
             return redirect()->route('sesiones.listado')->with('error', 'La sesión se encuentra en estado No Valido.');
         }
     }
@@ -43,15 +44,18 @@ class OperativaSesion extends Component
                 $cronograma->procesado = true;
                 $cronograma->save();
                 $this->sesion->refresh();
-                $this->dispatchBrowserEvent('swal', [
-                    'title' => 'ENTREGA EXITOSA',
-                    'text' => 'El monto ha sido entregado correctamente.',
-                    'icon' => 'success',
-                ]);
             } else {
                 $this->emit('error', "Ha ocurrido un error.");
                 return;
             }
+
+            if ($this->sesion->sesioncronogramas()->where('procesado', 0)->exists()) {
+                $this->sesion->estado = 'EN_PROGRESO';
+            } else {
+                $this->sesion->fecha_fin = now();
+                $this->sesion->estado = 'FINALIZADO';
+            }
+            $this->sesion->save();
             DB::commit();
             $this->procesando = false;
             $this->emit('success', 'Entrega registrada con exito.');
@@ -60,5 +64,10 @@ class OperativaSesion extends Component
             $this->procesando = false;
             $this->emit('error', "Ha ocurrido un error: " . $th->getMessage());
         }
+    }
+
+    public function generarReporte()
+    {
+        $this->mostrarReporte = !$this->mostrarReporte;
     }
 }

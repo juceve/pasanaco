@@ -25,25 +25,23 @@ class HomeController extends Controller
     {
         // Obtener estadísticas para el dashboard
         $participantes = \App\Models\Participante::count();
-        $sesiones = \App\Models\Sesion::count();
-        $sesionesActivas = \App\Models\Sesion::where('estado', 1)->count();
+        $sesiones = \App\Models\Sesion::where('estado', '!=', 'ANULADO')->count();
+         $sesionesActivas = \App\Models\Sesion::whereIn('estado', ['SORTEADO', 'EN_PROGRESO', 'CREADO'])->count();
         $totalUsuarios = \App\Models\User::count();
-        
+
         // Sesiones recientes
-        $sesionesRecientes = \App\Models\Sesion::orderBy('created_at', 'desc')
-            ->take(5)
+        $sesionesRecientes = \App\Models\Sesion::where([['estado', '!=', 'ANULADO'], ['estado', '!=', 'CREADO'], ['estado', '!=', 'FINALIZADO']])
+            ->orderBy('id', 'asc')            
             ->get();
-            
+
         // Próximos sorteos (sesiones activas sin sorteo realizado)
-        $proximosSorteos = \App\Models\Sesion::where('estado', 1)
-            ->whereDoesntHave('sesioncronogramas')
-            ->take(3)
+        $proximosSorteos = \App\Models\Sesion::where('estado', 'CREADO')                      
             ->get();
 
         return view('home', compact(
-            'participantes', 
-            'sesiones', 
-            'sesionesActivas', 
+            'participantes',
+            'sesiones',
+            'sesionesActivas',
             'totalUsuarios',
             'sesionesRecientes',
             'proximosSorteos'

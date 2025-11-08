@@ -21,10 +21,16 @@ class ParticipanteRequest extends FormRequest
      */
     public function rules(): array
     {
+        $participanteId = $this->route('participante') ? $this->route('participante')->id : null;
+        
         return [
             'nombre' => 'required|string|max:255',
             'celular' => 'required|string|max:20',
-            'email' => 'nullable|email|unique:participantes,email',
+            'email' => [
+                'nullable',
+                'email',
+                'unique:participantes,email,' . $participanteId
+            ],
         ];
     }
 }

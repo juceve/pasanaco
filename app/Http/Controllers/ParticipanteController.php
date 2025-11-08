@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ParticipanteRequest;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ParticipanteController extends Controller
@@ -38,12 +39,27 @@ class ParticipanteController extends Controller
     public function store(ParticipanteRequest $request)
     {
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'celular' => 'required|string|max:20',
-            'email' => 'nullable|email|unique:participantes,email',
-            
+            'imagen_qr' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        Participante::create($request->all());
+
+        $data = $request->except('imagen_qr');
+
+        // Crear el participante primero para obtener su ID
+        $participante = Participante::create($data);
+
+        // Manejar la subida de la imagen QR
+        if ($request->hasFile('imagen_qr')) {
+            $imagen = $request->file('imagen_qr');
+            $extension = $imagen->getClientOriginalExtension();
+            
+            // Codificar nombre: qr_ID_HASH(nombre+celular).extension
+            $hash = substr(md5($participante->nombre . $participante->celular), 0, 8);
+            $nombreImagen = 'qr_' . $participante->id . '_' . $hash . '.' . $extension;
+            
+            $ruta = $imagen->storeAs('qr_participantes', $nombreImagen, 'public');
+            $participante->qr = $ruta;
+            $participante->save();
+        }
 
         return Redirect::route('participantes.index')
             ->with('success', 'Participante creado correctamente.');
@@ -74,17 +90,50 @@ class ParticipanteController extends Controller
      */
     public function update(ParticipanteRequest $request, Participante $participante): RedirectResponse
     {
-        $participante->update($request->validated());
+        $request->validate([
+            'imagen_qr' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $data = $request->validated();
+
+        // Manejar la subida de la nueva imagen QR
+        if ($request->hasFile('imagen_qr')) {
+            // Eliminar la imagen anterior si existe
+            if ($participante->qr && Storage::disk('public')->exists($participante->qr)) {
+                Storage::disk('public')->delete($participante->qr);
+            }
+
+            $imagen = $request->file('imagen_qr');
+            $extension = $imagen->getClientOriginalExtension();
+            
+            // Codificar nombre: qr_ID_HASH(nombre+celular).extension
+            $nombre = $request->input('nombre', $participante->nombre);
+            $celular = $request->input('celular', $participante->celular);
+            $hash = substr(md5($nombre . $celular), 0, 8);
+            $nombreImagen = 'qr_' . $participante->id . '_' . $hash . '.' . $extension;
+            
+            $ruta = $imagen->storeAs('qr_participantes', $nombreImagen, 'public');
+            $data['qr'] = $ruta;
+        }
+
+        $participante->update($data);
 
         return Redirect::route('participantes.index')
-            ->with('success', 'Participante updated successfully');
+            ->with('success', 'Participante actualizado correctamente');
     }
 
     public function destroy($id): RedirectResponse
     {
-        Participante::find($id)->delete();
+        $participante = Participante::find($id);
+        
+        // Eliminar la imagen QR si existe
+        if ($participante->qr && Storage::disk('public')->exists($participante->qr)) {
+            Storage::disk('public')->delete($participante->qr);
+        }
+        
+        $participante->delete();
 
         return Redirect::route('participantes.index')
-            ->with('success', 'Participante deleted successfully');
+            ->with('success', 'Participante eliminado correctamente');
     }
 }

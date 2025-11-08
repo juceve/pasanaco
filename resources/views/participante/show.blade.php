@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('template_title')
-    {{ $participante->name ?? __('Show') . " " . __('Participante') }}
+    {{ $participante->name ?? __('Show') . ' ' . __('Participante') }}
 @endsection
 
 @section('content')
@@ -14,29 +14,40 @@
                             <span class="card-title">{{ __('Show') }} Participante</span>
                         </div>
                         <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('participantes.index') }}"><i class="fas fa-arrow-left"></i> Volver</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('participantes.index') }}"><i
+                                    class="fas fa-arrow-left"></i> Volver</a>
                         </div>
                     </div>
 
                     <div class="card-body bg-white">
-                        
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Nombre:</strong>
-                                    {{ $participante->nombre }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Celular:</strong>
-                                    {{ $participante->celular }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Email:</strong>
-                                    {{ $participante->email }}
-                                </div>
-                                <div class="form-group mb-2 mb20">
-                                    <strong>Estado:</strong>
-                                    {{ $participante->estado }}
-                                </div>
 
+                        <div class="form-group mb-2 mb20">
+                            <strong>Nombre:</strong>
+                            {{ $participante->nombre }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Celular:</strong>
+                            {{ $participante->celular }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Email:</strong>
+                            {{ $participante->email }}
+                        </div>
+                        <div class="form-group mb-2 mb20">
+                            <strong>Estado:</strong>
+                            @if ($participante->estado)
+                                <span class="badge bg-primary rounded-pill">Activo</span>
+                            @else
+                                <span class="badge bg-secondary rounded-pill">Inactivo</span>
+                            @endif
+                        </div>
+                        @if ($participante->qr)
+                            <div class="form-group">
+                                <strong>QR Code:</strong>
+                                <br>
+                                <img src="{{ asset('storage/' . $participante->qr) }}" alt="QR Code" class="img-fluid">
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

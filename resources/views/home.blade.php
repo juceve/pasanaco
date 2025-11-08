@@ -2,8 +2,8 @@
 @section('css')
     <style>
         /* ===========================
-               BASE STYLES
-            ============================ */
+                           BASE STYLES
+                        ============================ */
         * {
             margin: 0;
             padding: 0;
@@ -27,8 +27,8 @@
         }
 
         /* ===========================
-               HEADER
-            ============================ */
+                           HEADER
+                        ============================ */
         .dashboard-header {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(14px);
@@ -104,8 +104,8 @@
         }
 
         /* ===========================
-               STATS CARDS
-            ============================ */
+                           STATS CARDS
+                        ============================ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -163,8 +163,8 @@
         }
 
         /* ===========================
-               ACTION BUTTONS
-            ============================ */
+                           ACTION BUTTONS
+                        ============================ */
         .actions-section {
             margin-bottom: 30px;
         }
@@ -233,8 +233,8 @@
         }
 
         /* ===========================
-               RECENT ACTIVITY
-            ============================ */
+                           RECENT ACTIVITY
+                        ============================ */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -314,8 +314,8 @@
         }
 
         /* ===========================
-               RESPONSIVE
-            ============================ */
+                           RESPONSIVE
+                        ============================ */
         @media (max-width: 768px) {
             .dashboard-header {
                 flex-direction: column;
@@ -352,8 +352,8 @@
         }
 
         /* ===========================
-               LOGOUT MODAL
-            ============================ */
+                           LOGOUT MODAL
+                        ============================ */
         .logout-btn {
             background: rgba(255, 71, 87, 0.2);
             border: 1px solid rgba(255, 71, 87, 0.3);
@@ -371,92 +371,14 @@
         <!-- Header -->
         <header class="dashboard-header">
             <div class="header-left">
-                
+
                 <div class="header-info">
                     <h1>Dashboard</h1>
                     <p>¡Hola {{ Auth::user()->name }}! Bienvenido a tu Pasanaco Digital</p>
                 </div>
             </div>
-       
+
         </header>
-
-        <!-- Statistics Cards -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="stat-number">{{ $participantes }}</div>
-                <div class="stat-label">Participantes</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-circle-play"></i>
-                </div>
-                <div class="stat-number">{{ $sesionesActivas }}</div>
-                <div class="stat-label">Sesiones Activas</div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <div class="stat-number">{{ $sesiones }}</div>
-                <div class="stat-label">Total Sesiones</div>
-            </div>
-
-          
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="actions-section">
-            <h2 class="section-title">
-                <i class="fas fa-bolt"></i>
-                Acciones Rápidas
-            </h2>
-            <div class="actions-grid">
-                <a href="{{ route('sesiones.form') }}" class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-plus-circle"></i>
-                    </div>
-                    <div class="action-info">
-                        <h3>Crear Sesión</h3>
-                        <p>Inicia un nuevo ciclo de Pasanaco</p>
-                    </div>
-                </a>
-
-                <a href="{{ route('participantes.index') }}" class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <div class="action-info">
-                        <h3>Gestionar Participantes</h3>
-                        <p>Administra tu comunidad</p>
-                    </div>
-                </a>
-
-                {{-- <a href="{{ route('sesiones.listado') }}" class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-dice"></i>
-                    </div>
-                    <div class="action-info">
-                        <h3>Realizar Sorteos</h3>
-                        <p>Determina el orden de cobro</p>
-                    </div>
-                </a> --}}
-
-                {{-- <a href="{{ route('modos.index') }}" class="action-card">
-                    <div class="action-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <div class="action-info">
-                        <h3>Configurar Modos</h3>
-                        <p>Personaliza las modalidades</p>
-                    </div>
-                </a> --}}
-            </div>
-        </div>
 
         <!-- Recent Activity and Upcoming Sorteos -->
         <div class="content-grid">
@@ -464,7 +386,7 @@
                 <div class="card-header">
                     <h3 class="card-title">
                         <i class="fas fa-clock"></i>
-                        Sesiones Recientes
+                        Sesiones Iniciadas
                     </h3>
                 </div>
                 @if ($sesionesRecientes->count() > 0)
@@ -473,11 +395,9 @@
                             <div class="item-info">
                                 <h4>{{ $sesion->nombre_sesion }}</h4>
                                 <p>Cuota: ${{ number_format($sesion->cuota ?? 0) }} •
-                                    {{ $sesion->created_at->diffForHumans() }}</p>
+                                    {{ $sesion->estado }}</p>
                             </div>
-                            <span class="item-status {{ $sesion->estado ? 'status-active' : 'status-pending' }}">
-                                {{ $sesion->estado ? 'Activa' : 'Pendiente' }}
-                            </span>
+                            <a href="{{ route('sesiones.operativa', $sesion->id) }}" class="btn btn-primary">Gestionar</a>
                         </div>
                     @endforeach
                 @else
@@ -489,6 +409,87 @@
                     </div>
                 @endif
             </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">{{ $participantes }}</div>
+                    <div class="stat-label">Participantes</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-circle-play"></i>
+                    </div>
+                    <div class="stat-number">{{ $sesionesActivas }}</div>
+                    <div class="stat-label">Sesiones Activas</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-number">{{ $sesiones }}</div>
+                    <div class="stat-label">Total Sesiones Creadas</div>
+                </div>
+
+
+            </div>
+
+
+            <!-- Quick Actions -->
+            <div class="actions-section">
+                <h2 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    Acciones Rápidas
+                </h2>
+                <div class="actions-grid">
+                    <a href="{{ route('sesiones.form') }}" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-plus-circle"></i>
+                        </div>
+                        <div class="action-info">
+                            <h3>Crear Sesión</h3>
+                            <p>Inicia un nuevo ciclo de Pasanaco</p>
+                        </div>
+                    </a>
+
+                    <a href="{{ route('participantes.index') }}" class="action-card">
+                        <div class="action-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="action-info">
+                            <h3>Gestionar Participantes</h3>
+                            <p>Administra tu comunidad</p>
+                        </div>
+                    </a>
+
+                    {{-- <a href="{{ route('sesiones.listado') }}" class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-dice"></i>
+                    </div>
+                    <div class="action-info">
+                        <h3>Realizar Sorteos</h3>
+                        <p>Determina el orden de cobro</p>
+                    </div>
+                </a> --}}
+
+                    {{-- <a href="{{ route('modos.index') }}" class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="action-info">
+                        <h3>Configurar Modos</h3>
+                        <p>Personaliza las modalidades</p>
+                    </div>
+                </a> --}}
+                </div>
+            </div>
+
+
 
             <div class="content-card">
                 <div class="card-header">

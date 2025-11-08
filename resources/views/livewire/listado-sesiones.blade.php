@@ -48,40 +48,56 @@
                                             <td class="text-center align-middle">{{ $sesion->estado }}</td>
 
                                             <td class="text-end align-middle">
-                                                @if ($sesion->estado === 'CREADO')
-                                                    <a class="btn btn-sm btn-warning"
-                                                        href="{{ route('sesiones.form', $sesion->id) }}"
-                                                        title="Editar"><i class="fa fa-fw fa-edit"></i> </a>
-                                                @else
-                                                    <a class="btn btn-sm btn-warning disabled" href="#"><i
-                                                            class="fa fa-fw fa-edit"></i> </a>
-                                                @endif
-                                                <a class="btn btn-sm btn-info"
-                                                    href="{{ route('sesiones.sorteo', $sesion->id) }}"
-                                                    title="Sorteo de Numeros">
-                                                    <i class="fas fa-sort-numeric-up"></i>
-                                                </a>
-                                                <button class="btn btn-secondary btn-sm"
-                                                    onclick='clonarSesion({{ $sesion->id }})' title="Clonar Registro">
-                                                    <i class="fas fa-clone"></i>
-                                                </button>
-                                                <button class="btn btn-danger btn-sm"
-                                                    onclick='anular({{ $sesion->id }})'
-                                                    @if ($sesion->estado !== 'ANULADO') title="Anular" @else disabled title="Sesión ya Anulada" @endif>
-                                                    <i class="fa fa-fw fa-trash"></i>
-                                                </button>
 
-                                                {{-- <form action="{{ route('sesions.destroy', $sesion->id) }}" method="POST"
-                                                    class="delete" onsubmit="return false">
-                                                    <a class="btn btn-sm btn-info "
-                                                        href="{{ route('sesions.show', $sesion->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i></a>
-                                                   
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i></button>
-                                                </form> --}}
+                                                <div class="dropdown">
+                                                    <button class="btn btn-info dropdown-toggle" type="button"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Opciones
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-dark" style="font-size: 14px;">
+                                                        @if ($sesion->estado === 'CREADO')
+                                                            <li><a class="dropdown-item"
+                                                                    href="{{ route('sesiones.form', $sesion->id) }}">
+                                                                <i class="fas fa-fw fa-edit"></i> Editar
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <hr class="dropdown-divider">
+                                                            </li>
+                                                        @endif
+                                                        @if ($sesion->estado === 'SORTEADO' || $sesion->estado === 'EN_PROGRESO' || $sesion->estado === 'FINALIZADO')
+                                                            <li><a class="dropdown-item"
+                                                                    href="{{ route('sesiones.operativa', $sesion->id) }}">
+                                                                <i class="fas fa-fw fa-file-invoice-dollar"></i> Gestionar
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <hr class="dropdown-divider">
+                                                            </li>
+                                                        @endif
+
+                                                        <li><a class="dropdown-item"
+                                                                href="{{ route('sesiones.sorteo', $sesion->id) }}">
+                                                                <i class="fas fa-fw fa-dice"></i> Sorteo de Números
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="javascript:void(0)"
+                                                                onclick='clonarSesion({{ $sesion->id }})'>
+                                                                <i class="fas fa-fw fa-clone"></i> Clonar
+                                                                Sesión</a></li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="javascript:void(0)"
+                                                                onclick='anular({{ $sesion->id }})'>
+                                                                <i class="fas fa-fw fa-ban"></i> Anular Sesión
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

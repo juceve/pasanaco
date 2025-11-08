@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('celular');
+            $table->string('qr')->nullable();
             $table->string('email')->nullable()->unique();
             $table->boolean('estado')->default(true);            
             $table->timestamps();
