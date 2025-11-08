@@ -48,7 +48,7 @@ class Sesioncronograma extends Model
      */
     public function sesionparticipantes()
     {
-        return $this->hasMany(\App\Models\Sesionparticipante::class, 'id', 'sesioncronograma_id');
+        return $this->hasOne(\App\Models\Sesionparticipante::class, 'sesioncronograma_id', 'id');
     }
     
 }

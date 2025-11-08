@@ -5,6 +5,10 @@
 @endsection
 
 @section('content')
+    <div class="container fluid mb-3">
+        <h5>Participantes</h5>
+    </div>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -13,7 +17,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Participantes') }}
+                                Listado de participantes
                             </span>
 
                             <div class="float-right">
@@ -28,7 +32,7 @@
                     <div class="card-body bg-white">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover dataTable nowrap">
-                                <thead class="thead bg-primary text-white">
+                                <thead class="thead">
                                     <tr>
                                         <th>No</th>
 
@@ -71,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

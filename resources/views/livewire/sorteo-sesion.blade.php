@@ -2,13 +2,13 @@
     @section('template_title')
         Sorteo de Participantes
     @endsection
-    <div class="container fluid mb-3">
-        <h5 class="d-flex align-items-center">
-            Sorteo de Participantes &nbsp;
+    <div class="container-fluid mb-3">
+        <p class="d-flex align-items-center justify-content-between">
+           <span style="font-size: 18px;"> Sorteo de Participantes</span>
             @if ($sesion->estado != 'CREADO')
             <span class="badge rounded-pill text-bg-success" style="font-size: 10px;">Finalizado</span>
         @endif
-        </h5>
+        </p>
         
     </div>
 
@@ -136,11 +136,9 @@
         function guardarSorteo() {
             Swal.fire({
                 title: "REGISTRAR SORTEO",
-                text: "Está seguro de realizar esta operación?",
+                text: "¿Está seguro de realizar esta operación?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#1abc9c",
-                cancelButtonColor: "#2c3e50",
                 confirmButtonText: "Sí, registrar",
                 cancelButtonText: "Cancelar"
             }).then((result) => {

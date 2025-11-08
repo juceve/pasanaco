@@ -27,12 +27,12 @@
                     <div class="card-body bg-white">
                         <div class="table-responsive">
                             <table class="table table-striped table-hover dataTable nowrap" style="font-size: 14px;">
-                                <thead class="thead bg-primary text-white">
+                                <thead class="thead ">
                                     <tr>
                                         <th class="align-middle text-center">ID</th>
 
-                                        <th class="align-middle">Nombre Sesion</th>
-                                        <th class="align-middle text-center">Fecha Inicio</th>
+                                        <th class="align-middle">Nombre <br> Sesion</th>
+                                        <th class="align-middle text-center">Fecha <br> Inicio</th>
                                         <th class="align-middle text-center">Estado</th>
 
                                         <th class="align-middle text-end"></th>
@@ -62,8 +62,7 @@
                                                     <i class="fas fa-sort-numeric-up"></i>
                                                 </a>
                                                 <button class="btn btn-secondary btn-sm"
-                                                    onclick='clonarSesion({{ $sesion->id }})'
-                                                    title="Clonar Registro">
+                                                    onclick='clonarSesion({{ $sesion->id }})' title="Clonar Registro">
                                                     <i class="fas fa-clone"></i>
                                                 </button>
                                                 <button class="btn btn-danger btn-sm"
@@ -102,8 +101,6 @@
                 text: "Esta acción no se puede deshacer.",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#1abc9c',
-                cancelButtonColor: '#2c3e50',
                 confirmButtonText: 'Sí, anular',
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
@@ -112,6 +109,7 @@
                 }
             });
         }
+
         function clonarSesion(id) {
             Swal.fire({
                 title: 'Clonar Sesión',
@@ -127,25 +125,23 @@
                 `,
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonColor: '#1abc9c',
-                cancelButtonColor: '#2c3e50',
                 confirmButtonText: 'Clonar Sesión',
                 cancelButtonText: 'Cancelar',
                 focusConfirm: false,
                 preConfirm: () => {
                     const nuevoNombre = document.getElementById('nuevo-nombre').value;
                     const nuevaFecha = document.getElementById('nueva-fecha').value;
-                    
+
                     if (!nuevoNombre) {
                         Swal.showValidationMessage('Por favor ingrese el nombre de la nueva sesión');
                         return false;
                     }
-                    
+
                     if (!nuevaFecha) {
                         Swal.showValidationMessage('Por favor seleccione la fecha de inicio');
                         return false;
                     }
-                    
+
                     return {
                         nombre: nuevoNombre,
                         fecha: nuevaFecha

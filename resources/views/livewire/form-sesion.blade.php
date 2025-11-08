@@ -60,8 +60,8 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <h5 class="text-center">Adiciona Participantes</h5>
-                        <div class="row">
-                            <div class="col-7 mb-2">
+                        <div class="row g-2">
+                            <div class="col-12 col-md-6 col-xl-7 mb-2">
                                 <select wire:model="participanteId" class="form-select">
                                     <option value="">Seleccione un Participante</option>
                                     @foreach ($participantes as $participante)
@@ -71,7 +71,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-5 mb-2">
+                            <div class="col-7 col-md-3 col-xl-5 mb-2">
                                 <div class="input-group">
                                     <button class="btn btn-outline-secondary" type="button" id="btn-plus">+</button>
                                     <input type="number" class="form-control text-center" id="cantidad" min="0"
@@ -80,17 +80,18 @@
 
                                 </div>
                             </div>
-                            <div class="col-7 d-grid mb-2">
-                                <button class="btn btn-success" wire:click="addTodosParticipantes()">
-                                    Agregar todos <i class="fas fa-check-double"></i>
-                                    </button>
-
-                            </div>
-                            <div class="col-5 d-grid mb-2">
+                            <div class="col-5 col-md-3 col-xl-7 d-grid mb-2">
                                 <button class="btn btn-info" wire:click="addParticipante()">Agregar <i
                                         class="fas fa-arrow-down"></i></button>
 
                             </div>
+                            <div class="col-12 col-xl-5 d-grid mb-2">
+                                <button class="btn btn-outline-success" wire:click="addTodosParticipantes()">
+                                    Agregar todos <i class="fas fa-check-double"></i>
+                                    </button>
+
+                            </div>
+                            
                         </div>
                         
                         <div class="table-responsive mt-1">
@@ -170,11 +171,9 @@
         function registrarSesion() {
             Swal.fire({
                 title: "REGISTRAR SESIÓN",
-                text: "Está seguro de realizar esta operación?",
+                text: "¿Está seguro de realizar esta operación?",
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: "#1abc9c",
-                cancelButtonColor: "#2c3e50",
                 confirmButtonText: "Sí, registrar",
                 cancelButtonText: "Cancelar"
             }).then((result) => {

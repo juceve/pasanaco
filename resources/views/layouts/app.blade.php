@@ -1163,6 +1163,150 @@
             border-color: #28a745 !important;
             box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
         }
+
+        /* SweetAlert2 Dark Theme Customization */
+        .swal2-popup {
+            background: rgba(44, 62, 80, 0.98) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid var(--glass-border) !important;
+            border-radius: 16px !important;
+            color: var(--text-primary) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .swal2-title {
+            color: var(--accent-color) !important;
+            font-weight: 700 !important;
+            font-size: 1.5rem !important;
+        }
+
+        .swal2-html-container {
+            color: var(--text-secondary) !important;
+            font-size: 1rem !important;
+        }
+
+        .swal2-confirm {
+            background: linear-gradient(135deg, #1abc9c, #16a085) !important;
+            border: none !important;
+            border-radius: 10px !important;
+            padding: 0.75rem 2rem !important;
+            font-weight: 600 !important;
+            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.4) !important;
+        }
+
+        .swal2-confirm:hover {
+            background: linear-gradient(135deg, #16a085, #1abc9c) !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(26, 188, 156, 0.6) !important;
+        }
+
+        .swal2-cancel {
+            background: rgba(44, 62, 80, 0.8) !important;
+            border: 1px solid var(--glass-border) !important;
+            border-radius: 10px !important;
+            padding: 0.75rem 2rem !important;
+            font-weight: 600 !important;
+            color: var(--text-primary) !important;
+        }
+
+        .swal2-cancel:hover {
+            background: rgba(52, 73, 94, 0.9) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .swal2-icon.swal2-success {
+            border-color: #1abc9c !important;
+        }
+
+        .swal2-icon.swal2-success [class^='swal2-success-line'] {
+            background-color: #1abc9c !important;
+        }
+
+        .swal2-icon.swal2-success .swal2-success-ring {
+            border-color: rgba(26, 188, 156, 0.3) !important;
+        }
+
+        .swal2-icon.swal2-error {
+            border-color: #e74c3c !important;
+        }
+
+        .swal2-icon.swal2-error [class^='swal2-x-mark-line'] {
+            background-color: #e74c3c !important;
+        }
+
+        .swal2-icon.swal2-warning {
+            border-color: #f39c12 !important;
+            color: #f39c12 !important;
+        }
+
+        .swal2-icon.swal2-info {
+            border-color: #3498db !important;
+            color: #3498db !important;
+        }
+
+        .swal2-icon.swal2-question {
+            border-color: #9b59b6 !important;
+            color: #9b59b6 !important;
+        }
+
+        /* SweetAlert2 Input Fields */
+        .swal2-input, .swal2-textarea, .swal2-select {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border: 2px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 10px !important;
+            color: var(--text-primary) !important;
+            padding: 0.75rem 1rem !important;
+        }
+
+        .swal2-input:focus, .swal2-textarea:focus, .swal2-select:focus {
+            border-color: var(--accent-color) !important;
+            box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.25) !important;
+        }
+
+        .swal2-input::placeholder, .swal2-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        .swal2-validation-message {
+            background: rgba(231, 76, 60, 0.2) !important;
+            color: #e74c3c !important;
+            border-color: #e74c3c !important;
+        }
+
+        /* Toast Customization */
+        .colored-toast.swal2-icon-success {
+            background-color: rgba(26, 188, 156, 0.95) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+
+        .colored-toast.swal2-icon-error {
+            background-color: rgba(231, 76, 60, 0.95) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+
+        .colored-toast.swal2-icon-info {
+            background-color: rgba(52, 152, 219, 0.95) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+
+        .colored-toast.swal2-icon-warning {
+            background-color: rgba(243, 156, 18, 0.95) !important;
+            backdrop-filter: blur(10px) !important;
+        }
+
+        .colored-toast .swal2-title {
+            color: white !important;
+            font-size: 0.9rem !important;
+        }
+
+        .colored-toast .swal2-icon {
+            color: white !important;
+            border-color: white !important;
+        }
+
+        .colored-toast .swal2-timer-progress-bar {
+            background: rgba(255, 255, 255, 0.7) !important;
+        }
     </style>
 
     @yield('css')
@@ -1203,16 +1347,7 @@
                             <i class="fas fa-users me-2"></i>Participantes
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('modos.index') }}">
-                            <i class="fas fa-cogs me-2"></i>Modos
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('users.index') }}">
-                            <i class="fas fa-user-shield me-2"></i>Usuarios
-                        </a>
-                    </li>
+             
                 </ul>
                 
                 <div class="navbar-nav">
@@ -1223,11 +1358,7 @@
                             <span>{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end glass-card border-0">
-                            <li>
-                                <a class="dropdown-item text-light" href="{{ route('users.show', Auth::id()) }}">
-                                    <i class="fas fa-user me-2"></i>Mi Perfil
-                                </a>
-                            </li>
+                          
                             <li><hr class="dropdown-divider border-secondary"></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" class="d-inline">
@@ -1248,7 +1379,7 @@
     <!-- Main Content -->
     <main class="main-content" style="margin-top: 60px;">
         <div class="container-fluid px-4">
-            <!-- Flash Messages -->
+            {{-- <!-- Flash Messages -->
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fas fa-check-circle me-2"></i>
@@ -1279,7 +1410,7 @@
                     {{ session('info') }}
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-            @endif
+            @endif --}}
 
             <!-- Page Content -->
             @yield('content')
@@ -1627,12 +1758,10 @@
         $('.delete').submit(function(e) {
             Swal.fire({
                 title: 'Eliminar el Registro de la BD',
-                text: "Esta seguro de realizar esta operación?",
+                text: "¿Está seguro de realizar esta operación?",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#1abc9c',
-                cancelButtonColor: '#2c3e50',
-                confirmButtonText: 'Si, continuar!',
+                confirmButtonText: 'Sí, continuar!',
                 cancelButtonText: 'No, cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -1644,12 +1773,10 @@
         $('.anular').submit(function(e) {
             Swal.fire({
                 title: 'Anular Venta',
-                text: "Esta seguro de realizar esta operación?",
+                text: "¿Está seguro de realizar esta operación?",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#1abc9c',
-                cancelButtonColor: '#2c3e50',
-                confirmButtonText: 'Si, continuar!',
+                confirmButtonText: 'Sí, continuar!',
                 cancelButtonText: 'No, cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -1661,12 +1788,10 @@
         $('.reset').submit(function(e) {
             Swal.fire({
                 title: 'RESET PASSWORD',
-                text: "Esta seguro de realizar esta operación?",
+                text: "¿Está seguro de realizar esta operación?",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#1abc9c',
-                cancelButtonColor: '#2c3e50',
-                confirmButtonText: 'Si, continuar!',
+                confirmButtonText: 'Sí, continuar!',
                 cancelButtonText: 'No, cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {

@@ -1,34 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Dashboard - Pasanaco Digital</title>
-
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#1abc9c" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="Pasanaco" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="application-name" content="Pasanaco" />
-
-    <!-- PWA Icons -->
-    <link rel="apple-touch-icon" href="{{ asset('images/icons/icon-192x192.png') }}" />
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('images/icons/icon-152x152.png') }}" />
-    <link rel="apple-touch-icon" sizes="192x192" href="{{ asset('images/icons/icon-192x192.png') }}" />
-
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="{{ asset('manifest.json') }}" />
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-
+@extends('layouts.app')
+@section('css')
     <style>
         /* ===========================
-           BASE STYLES
-        ============================ */
+               BASE STYLES
+            ============================ */
         * {
             margin: 0;
             padding: 0;
@@ -52,8 +27,8 @@
         }
 
         /* ===========================
-           HEADER
-        ============================ */
+               HEADER
+            ============================ */
         .dashboard-header {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(14px);
@@ -129,8 +104,8 @@
         }
 
         /* ===========================
-           STATS CARDS
-        ============================ */
+               STATS CARDS
+            ============================ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -188,8 +163,8 @@
         }
 
         /* ===========================
-           ACTION BUTTONS
-        ============================ */
+               ACTION BUTTONS
+            ============================ */
         .actions-section {
             margin-bottom: 30px;
         }
@@ -258,8 +233,8 @@
         }
 
         /* ===========================
-           RECENT ACTIVITY
-        ============================ */
+               RECENT ACTIVITY
+            ============================ */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -339,8 +314,8 @@
         }
 
         /* ===========================
-           RESPONSIVE
-        ============================ */
+               RESPONSIVE
+            ============================ */
         @media (max-width: 768px) {
             .dashboard-header {
                 flex-direction: column;
@@ -377,8 +352,8 @@
         }
 
         /* ===========================
-           LOGOUT MODAL
-        ============================ */
+               LOGOUT MODAL
+            ============================ */
         .logout-btn {
             background: rgba(255, 71, 87, 0.2);
             border: 1px solid rgba(255, 71, 87, 0.3);
@@ -390,32 +365,19 @@
             box-shadow: 0 8px 25px rgba(255, 71, 87, 0.3);
         }
     </style>
-</head>
-
-<body>
+@endsection
+@section('content')
     <div class="dashboard-container">
         <!-- Header -->
         <header class="dashboard-header">
             <div class="header-left">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo Pasanaco" />
+                
                 <div class="header-info">
                     <h1>Dashboard</h1>
                     <p>¡Hola {{ Auth::user()->name }}! Bienvenido a tu Pasanaco Digital</p>
                 </div>
             </div>
-            <div class="header-actions">
-                <a href="{{ route('sesiones.listado') }}" class="btn-header btn-primary">
-                    <i class="fas fa-plus"></i>
-                    Nueva Sesión
-                </a>
-                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                    @csrf
-                    <button type="submit" class="btn-header logout-btn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Salir
-                    </button>
-                </form>
-            </div>
+       
         </header>
 
         <!-- Statistics Cards -->
@@ -427,7 +389,7 @@
                 <div class="stat-number">{{ $participantes }}</div>
                 <div class="stat-label">Participantes</div>
             </div>
-            
+
             <div class="stat-card">
                 <div class="stat-icon">
                     <i class="fas fa-circle-play"></i>
@@ -435,7 +397,7 @@
                 <div class="stat-number">{{ $sesionesActivas }}</div>
                 <div class="stat-label">Sesiones Activas</div>
             </div>
-            
+
             <div class="stat-card">
                 <div class="stat-icon">
                     <i class="fas fa-calendar-check"></i>
@@ -443,14 +405,8 @@
                 <div class="stat-number">{{ $sesiones }}</div>
                 <div class="stat-label">Total Sesiones</div>
             </div>
-            
-            <div class="stat-card">
-                <div class="stat-icon">
-                    <i class="fas fa-user-shield"></i>
-                </div>
-                <div class="stat-number">{{ $totalUsuarios }}</div>
-                <div class="stat-label">Usuarios</div>
-            </div>
+
+          
         </div>
 
         <!-- Quick Actions -->
@@ -469,7 +425,7 @@
                         <p>Inicia un nuevo ciclo de Pasanaco</p>
                     </div>
                 </a>
-                
+
                 <a href="{{ route('participantes.index') }}" class="action-card">
                     <div class="action-icon">
                         <i class="fas fa-user-plus"></i>
@@ -479,8 +435,8 @@
                         <p>Administra tu comunidad</p>
                     </div>
                 </a>
-                
-                <a href="{{ route('sesiones.listado') }}" class="action-card">
+
+                {{-- <a href="{{ route('sesiones.listado') }}" class="action-card">
                     <div class="action-icon">
                         <i class="fas fa-dice"></i>
                     </div>
@@ -488,9 +444,9 @@
                         <h3>Realizar Sorteos</h3>
                         <p>Determina el orden de cobro</p>
                     </div>
-                </a>
-                
-                <a href="{{ route('modos.index') }}" class="action-card">
+                </a> --}}
+
+                {{-- <a href="{{ route('modos.index') }}" class="action-card">
                     <div class="action-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
@@ -498,7 +454,7 @@
                         <h3>Configurar Modos</h3>
                         <p>Personaliza las modalidades</p>
                     </div>
-                </a>
+                </a> --}}
             </div>
         </div>
 
@@ -511,17 +467,18 @@
                         Sesiones Recientes
                     </h3>
                 </div>
-                @if($sesionesRecientes->count() > 0)
-                    @foreach($sesionesRecientes as $sesion)
-                    <div class="recent-item">
-                        <div class="item-info">
-                            <h4>{{ $sesion->nombre_sesion }}</h4>
-                            <p>Cuota: ${{ number_format($sesion->cuota ?? 0) }} • {{ $sesion->created_at->diffForHumans() }}</p>
+                @if ($sesionesRecientes->count() > 0)
+                    @foreach ($sesionesRecientes as $sesion)
+                        <div class="recent-item">
+                            <div class="item-info">
+                                <h4>{{ $sesion->nombre_sesion }}</h4>
+                                <p>Cuota: ${{ number_format($sesion->cuota ?? 0) }} •
+                                    {{ $sesion->created_at->diffForHumans() }}</p>
+                            </div>
+                            <span class="item-status {{ $sesion->estado ? 'status-active' : 'status-pending' }}">
+                                {{ $sesion->estado ? 'Activa' : 'Pendiente' }}
+                            </span>
                         </div>
-                        <span class="item-status {{ $sesion->estado ? 'status-active' : 'status-pending' }}">
-                            {{ $sesion->estado ? 'Activa' : 'Pendiente' }}
-                        </span>
-                    </div>
                     @endforeach
                 @else
                     <div class="recent-item">
@@ -540,17 +497,18 @@
                         Próximos Sorteos
                     </h3>
                 </div>
-                @if($proximosSorteos->count() > 0)
-                    @foreach($proximosSorteos as $sorteo)
-                    <div class="recent-item">
-                        <div class="item-info">
-                            <h4>{{ $sorteo->nombre_sesion }}</h4>
-                            <p>Cuota: ${{ number_format($sorteo->cuota ?? 0) }} • Listo para sorteo</p>
+                @if ($proximosSorteos->count() > 0)
+                    @foreach ($proximosSorteos as $sorteo)
+                        <div class="recent-item">
+                            <div class="item-info">
+                                <h4>{{ $sorteo->nombre_sesion }}</h4>
+                                <p>Cuota: ${{ number_format($sorteo->cuota ?? 0) }} • Listo para sorteo</p>
+                            </div>
+                            <a href="{{ route('sesiones.sorteo', $sorteo->id) }}" class="item-status status-pending"
+                                style="text-decoration: none;">
+                                Sortear
+                            </a>
                         </div>
-                        <a href="{{ route('sesiones.sorteo', $sorteo->id) }}" class="item-status status-pending" style="text-decoration: none;">
-                            Sortear
-                        </a>
-                    </div>
                     @endforeach
                 @else
                     <div class="recent-item">
@@ -565,19 +523,22 @@
     </div>
 
     <!-- PWA Service Worker -->
+
+@endsection
+@section('js')
     <script>
         // Registrar Service Worker para PWA
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/sw.js', {
-                    scope: '/'
-                })
-                .then(function(registration) {
-                    console.log('Service Worker registrado con éxito:', registration.scope);
-                })
-                .catch(function(error) {
-                    console.error('Error al registrar Service Worker:', error);
-                });
+                        scope: '/'
+                    })
+                    .then(function(registration) {
+                        console.log('Service Worker registrado con éxito:', registration.scope);
+                    })
+                    .catch(function(error) {
+                        console.error('Error al registrar Service Worker:', error);
+                    });
             });
         }
 
@@ -588,9 +549,7 @@
             }
         });
     </script>
-    
+
     <!-- PWA Install Button específico para Home Dashboard -->
     <script src="{{ asset('assets/js/home-pwa-install.js') }}"></script>
-</body>
-
-</html>
+@endsection
