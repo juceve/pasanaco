@@ -54,21 +54,31 @@
                                                         data-bs-toggle="dropdown" aria-expanded="false">
                                                         Opciones
                                                     </button>
-                                                    <ul class="dropdown-menu dropdown-menu-dark" style="font-size: 14px;">
+                                                    <ul class="dropdown-menu dropdown-menu-dark"
+                                                        style="font-size: 14px;">
                                                         @if ($sesion->estado === 'CREADO')
                                                             <li><a class="dropdown-item"
                                                                     href="{{ route('sesiones.form', $sesion->id) }}">
-                                                                <i class="fas fa-fw fa-edit"></i> Editar
+                                                                    <i class="fas fa-fw fa-edit"></i> Editar
                                                                 </a>
                                                             </li>
                                                             <li>
                                                                 <hr class="dropdown-divider">
                                                             </li>
                                                         @endif
-                                                        @if ($sesion->estado === 'SORTEADO' || $sesion->estado === 'EN_PROGRESO' || $sesion->estado === 'FINALIZADO')
+                                                        @if ($sesion->estado === 'SORTEADO' || $sesion->estado === 'EN_PROGRESO' || $sesion->estado != 'FINALIZADO')
                                                             <li><a class="dropdown-item"
                                                                     href="{{ route('sesiones.operativa', $sesion->id) }}">
-                                                                <i class="fas fa-fw fa-file-invoice-dollar"></i> Gestionar
+                                                                    <i class="fas fa-fw fa-file-invoice-dollar"></i>
+                                                                    Entregar Pasanaco
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <hr class="dropdown-divider">
+                                                            </li>
+                                                            <li><a class="dropdown-item"
+                                                                    href="{{ route('sesiones.cobrarcuota', $sesion->id) }}">
+                                                                    <i class="fas fa-hand-holding-usd"></i> Cobrar Cuota
                                                                 </a>
                                                             </li>
                                                             <li>

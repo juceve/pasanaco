@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin')->nullable();
             $table->decimal('cuota', 10, 2);
+            $table->string('qrcobro')->nullable();
             $table->foreignId('modo_id')->nullable()->constrained('modos')->nullOnDelete();
             $table->enum('estado',['CREADO', 'SORTEADO','EN_PROGRESO','FINALIZADO','ANULADO'])->default('CREADO');
             $table->timestamps();

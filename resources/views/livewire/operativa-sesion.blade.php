@@ -76,7 +76,7 @@
                                         </a>
                                     @else
                                         <button class="btn btn-warning"
-                                            onclick="entrega({{ $cronograma->id }},{{ number_format($cronograma->sesion->cuota * $cronograma->sesion->sesionparticipantes->count(), 2) }},{{ $i }})">Entregar</button>
+                                            onclick="entrega({{ $cronograma->id }},{{ $cronograma->sesion->cuota * $cronograma->sesion->sesionparticipantes->count() }},{{ $i }})">Entregar</button>
                                     @endif
                                 </td>
                             </tr>
@@ -89,7 +89,7 @@
     @if ($sesion->estado === 'FINALIZADO')
         <div class="d-grid mb-3">
             <button class="btn btn-info" wire:click="generarReporte">
-                @if($mostrarReporte)
+                @if ($mostrarReporte)
                     <i class="fas fa-eye-slash"></i> Ocultar Reporte
                 @else
                     <i class="fas fa-file-alt"></i> Generar Reporte
@@ -97,7 +97,7 @@
             </button>
         </div>
 
-        @if($mostrarReporte)
+        @if ($mostrarReporte)
             <div class="card mb-3" id="reporteSesion">
                 <div class="card-header bg-success text-white">
                     <h4 class="mb-0 text-center">
@@ -120,11 +120,13 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <strong><i class="fas fa-calendar-check"></i> Fecha Inicio:</strong>
-                                            <span class="ms-2">{{ \Carbon\Carbon::parse($sesion->fecha_inicio)->format('d/m/Y') }}</span>
+                                            <span
+                                                class="ms-2">{{ \Carbon\Carbon::parse($sesion->fecha_inicio)->format('d/m/Y') }}</span>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <strong><i class="fas fa-calendar-times"></i> Fecha Fin:</strong>
-                                            <span class="ms-2">{{ \Carbon\Carbon::parse($sesion->fecha_fin)->format('d/m/Y') }}</span>
+                                            <span
+                                                class="ms-2">{{ \Carbon\Carbon::parse($sesion->fecha_fin)->format('d/m/Y') }}</span>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <strong><i class="fas fa-coins"></i> Cuota:</strong>
@@ -132,7 +134,8 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <strong><i class="fas fa-users"></i> Total Participantes:</strong>
-                                            <span class="ms-2 badge bg-info">{{ $sesion->sesionparticipantes->count() }}</span>
+                                            <span
+                                                class="ms-2 badge bg-info">{{ $sesion->sesionparticipantes->count() }}</span>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <strong><i class="fas fa-clipboard-list"></i> Modalidad:</strong>
@@ -142,11 +145,11 @@
                                             <strong><i class="fas fa-check-circle"></i> Estado:</strong>
                                             <span class="ms-2 badge bg-success">{{ $sesion->estado }}</span>
                                         </div>
-                                        @if($sesion->observaciones)
-                                        <div class="col-12 mb-2">
-                                            <strong><i class="fas fa-sticky-note"></i> Observaciones:</strong>
-                                            <p class="ms-2 mb-0">{{ $sesion->observaciones }}</p>
-                                        </div>
+                                        @if ($sesion->observaciones)
+                                            <div class="col-12 mb-2">
+                                                <strong><i class="fas fa-sticky-note"></i> Observaciones:</strong>
+                                                <p class="ms-2 mb-0">{{ $sesion->observaciones }}</p>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -157,8 +160,13 @@
                     <!-- Estadísticas -->
                     @php
                         $totalEntregado = $sesion->sesioncronogramas->sum('monto_entregado');
-                        $totalEsperado = $sesion->sesioncronogramas->count() * ($sesion->cuota * $sesion->sesionparticipantes->count());
-                        $promedioEntrega = $sesion->sesioncronogramas->count() > 0 ? $totalEntregado / $sesion->sesioncronogramas->count() : 0;
+                        $totalEsperado =
+                            $sesion->sesioncronogramas->count() *
+                            ($sesion->cuota * $sesion->sesionparticipantes->count());
+                        $promedioEntrega =
+                            $sesion->sesioncronogramas->count() > 0
+                                ? $totalEntregado / $sesion->sesioncronogramas->count()
+                                : 0;
                     @endphp
                     <div class="row mb-4">
                         <div class="col-md-4 mb-3">
@@ -207,20 +215,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($sesion->sesionparticipantes as $index => $sp)
-                                                <tr>
-                                                    <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $sp->participante->nombre }}</td>
-                                                    <td>{{ $sp->participante->celular ?? 'N/A' }}</td>
-                                                    <td>{{ $sp->participante->email ?? 'N/A' }}</td>
-                                                    <td class="text-center">
-                                                        @if($sp->sesioncronograma_id)
-                                                            <span class="badge bg-primary">Turno {{ $sesion->sesioncronogramas->search(function($item) use ($sp) { return $item->id === $sp->sesioncronograma_id; }) + 1 }}</span>
-                                                        @else
-                                                            <span class="badge bg-secondary">No asignado</span>
-                                                        @endif
-                                                    </td>
-                                                </tr>
+                                                @foreach ($sesion->sesionparticipantes as $index => $sp)
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ $sp->participante->nombre }}</td>
+                                                        <td>{{ $sp->participante->celular ?? 'N/A' }}</td>
+                                                        <td>{{ $sp->participante->email ?? 'N/A' }}</td>
+                                                        <td class="text-center">
+                                                            @if ($sp->sesioncronograma_id)
+                                                                <span class="badge bg-primary">Turno
+                                                                    {{ $sesion->sesioncronogramas->search(function ($item) use ($sp) {return $item->id === $sp->sesioncronograma_id;}) + 1 }}</span>
+                                                            @else
+                                                                <span class="badge bg-secondary">No asignado</span>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -235,7 +244,8 @@
                         <div class="col-12">
                             <div class="card border-warning">
                                 <div class="card-header bg-warning text-dark">
-                                    <h5 class="mb-0"><i class="fas fa-calendar-alt"></i> Detalle del Cronograma de Entregas</h5>
+                                    <h5 class="mb-0"><i class="fas fa-calendar-alt"></i> Detalle del Cronograma de
+                                        Entregas</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -254,29 +264,37 @@
                                             </thead>
                                             <tbody>
                                                 @php $totalDiferencia = 0; @endphp
-                                                @foreach($sesion->sesioncronogramas as $index => $cronograma)
+                                                @foreach ($sesion->sesioncronogramas as $index => $cronograma)
                                                     @php
-                                                        $montoEsperado = $sesion->cuota * $sesion->sesionparticipantes->count();
+                                                        $montoEsperado =
+                                                            $sesion->cuota * $sesion->sesionparticipantes->count();
                                                         $diferencia = $cronograma->monto_entregado - $montoEsperado;
                                                         $totalDiferencia += $diferencia;
                                                     @endphp
                                                     <tr class="text-center">
                                                         <td><strong>{{ $index + 1 }}</strong></td>
-                                                        <td class="text-start">{{ $cronograma->sesionparticipantes->participante->nombre }}</td>
-                                                        <td>{{ \Carbon\Carbon::parse($cronograma->fecha)->format('d/m/Y') }}</td>
+                                                        <td class="text-start">
+                                                            {{ $cronograma->sesionparticipantes->participante->nombre }}
+                                                        </td>
+                                                        <td>{{ \Carbon\Carbon::parse($cronograma->fecha)->format('d/m/Y') }}
+                                                        </td>
                                                         <td>
-                                                            @if($cronograma->fecha_pago)
-                                                                <span class="badge bg-success">{{ \Carbon\Carbon::parse($cronograma->fecha_pago)->format('d/m/Y') }}</span>
+                                                            @if ($cronograma->fecha_pago)
+                                                                <span
+                                                                    class="badge bg-success">{{ \Carbon\Carbon::parse($cronograma->fecha_pago)->format('d/m/Y') }}</span>
                                                             @else
                                                                 <span class="badge bg-secondary">Pendiente</span>
                                                             @endif
                                                         </td>
-                                                        <td class="text-end">Bs. {{ number_format($montoEsperado, 2) }}</td>
+                                                        <td class="text-end">Bs.
+                                                            {{ number_format($montoEsperado, 2) }}</td>
                                                         <td class="text-end">
-                                                            <strong class="text-success">Bs. {{ number_format($cronograma->monto_entregado, 2) }}</strong>
+                                                            <strong class="text-success">Bs.
+                                                                {{ number_format($cronograma->monto_entregado, 2) }}</strong>
                                                         </td>
                                                         <td class="text-end">
-                                                            <span class="badge {{ $diferencia >= 0 ? 'bg-success' : 'bg-danger' }}">
+                                                            <span
+                                                                class="badge {{ $diferencia >= 0 ? 'bg-success' : 'bg-danger' }}">
                                                                 Bs. {{ number_format($diferencia, 2) }}
                                                             </span>
                                                         </td>
@@ -289,10 +307,13 @@
                                             <tfoot class="table-secondary">
                                                 <tr>
                                                     <th colspan="4" class="text-end">TOTALES:</th>
-                                                    <th class="text-end">Bs. {{ number_format($totalEsperado, 2) }}</th>
-                                                    <th class="text-end text-success">Bs. {{ number_format($totalEntregado, 2) }}</th>
+                                                    <th class="text-end">Bs. {{ number_format($totalEsperado, 2) }}
+                                                    </th>
+                                                    <th class="text-end text-success">Bs.
+                                                        {{ number_format($totalEntregado, 2) }}</th>
                                                     <th class="text-end">
-                                                        <span class="badge {{ $totalDiferencia >= 0 ? 'bg-success' : 'bg-danger' }}">
+                                                        <span
+                                                            class="badge {{ $totalDiferencia >= 0 ? 'bg-success' : 'bg-danger' }}">
                                                             Bs. {{ number_format($totalDiferencia, 2) }}
                                                         </span>
                                                     </th>
@@ -318,7 +339,9 @@
                                         <div class="col-md-3 mb-3">
                                             <div class="p-3 border rounded">
                                                 <h6 class="text-warning">Entregas Realizadas</h6>
-                                                <h4 class="text-white">{{ $sesion->sesioncronogramas->where('procesado', true)->count() }} / {{ $sesion->sesioncronogramas->count() }}</h4>
+                                                <h4 class="text-white">
+                                                    {{ $sesion->sesioncronogramas->where('procesado', true)->count() }}
+                                                    / {{ $sesion->sesioncronogramas->count() }}</h4>
                                             </div>
                                         </div>
                                         <div class="col-md-3 mb-3">
@@ -331,7 +354,9 @@
                                             <div class="p-3 border rounded">
                                                 <h6 class="text-warning">Duración Total</h6>
                                                 @php
-                                                    $duracion = \Carbon\Carbon::parse($sesion->fecha_inicio)->diffInDays(\Carbon\Carbon::parse($sesion->fecha_fin));
+                                                    $duracion = \Carbon\Carbon::parse(
+                                                        $sesion->fecha_inicio,
+                                                    )->diffInDays(\Carbon\Carbon::parse($sesion->fecha_fin));
                                                 @endphp
                                                 <h4 class="text-white">{{ $duracion }} días</h4>
                                             </div>
@@ -339,7 +364,8 @@
                                         <div class="col-md-3 mb-3">
                                             <div class="p-3 border rounded">
                                                 <h6 class="text-warning">Balance</h6>
-                                                <h4 class="{{ $totalDiferencia >= 0 ? 'text-success' : 'text-danger' }}">
+                                                <h4
+                                                    class="{{ $totalDiferencia >= 0 ? 'text-success' : 'text-danger' }}">
                                                     Bs. {{ number_format($totalDiferencia, 2) }}
                                                 </h4>
                                             </div>

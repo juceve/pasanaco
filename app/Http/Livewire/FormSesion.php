@@ -10,10 +10,12 @@ use App\Models\Sesionparticipante;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class FormSesion extends Component
 {
-    public $nombre_sesion = '', $fecha_inicio = '', $cuota = '', $modo_id = 1, $sesion = null, $sesion_id = null;
+    use WithFileUploads;
+    public $nombre_sesion = '', $fecha_inicio = '', $cuota = '', $modo_id = 1, $sesion = null, $sesion_id = null, $qrcobro;
     public $arrayParticipantes = [], $participanteId = '', $cantidad = 1;
     public $procesando = false;
 
@@ -28,7 +30,7 @@ class FormSesion extends Component
             $this->fecha_inicio = $this->sesion->fecha_inicio;
             $this->cuota = $this->sesion->cuota;
             $this->modo_id = $this->sesion->modo_id;
-            
+
             foreach ($this->sesion->sesionparticipantes as $item) {
                 $this->arrayParticipantes[] = array("id" => $item->participante_id, "nombre" => $item->participante->nombre);
             }
@@ -81,7 +83,6 @@ class FormSesion extends Component
                         'fecha' => $fecha,
                     ]);
                 }
-                
             } else {
                 $sesion = Sesion::create($validatedData);
 
@@ -101,6 +102,27 @@ class FormSesion extends Component
                     ]);
                 }
             }
+
+            if ($this->qrcobro) {
+                // Obtener la extensión original
+                $extension = $this->qrcobro->getClientOriginalExtension();
+
+                // Crear nombre único: id + timestamp
+                $filename = auth()->id() . '_' . now()->format('Ymd_His') . '.' . $extension;
+
+                // Guardar en storage/app/public/qr_cobros
+                $path = $this->qrcobro->storeAs('qr_cobros', $filename,'public');
+
+                if ($this->sesion) {
+                    $this->sesion->qrcobro = $path;
+                    $this->sesion->save();
+                } else {
+                    $sesion->qrcobro=$path;
+                    $sesion->save();
+                }
+                
+            }
+
             DB::commit();
             return redirect()->route('sesiones.listado')->with('success', 'Sesión guardada exitosamente.');
         } catch (\Exception $e) {
@@ -159,21 +181,21 @@ class FormSesion extends Component
     {
         // Limpiar el array actual
         $this->arrayParticipantes = [];
-        
+
         // Obtener todos los participantes
         $participantes = Participante::all();
-        
+
         // Agregar cada participante una vez al array
         foreach ($participantes as $participante) {
             $this->arrayParticipantes[] = array(
-                "id" => $participante->id, 
+                "id" => $participante->id,
                 "nombre" => $participante->nombre
             );
         }
-        
+
         // Limpiar las selecciones actuales
         $this->reset(['participanteId', 'cantidad']);
-        
+
         // Emitir mensaje de éxito
         $this->emit('success', 'Se agregaron todos los participantes (' . count($participantes) . ' participantes).');
     }

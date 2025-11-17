@@ -34,7 +34,7 @@ class Sesion extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['nombre_sesion', 'fecha_inicio', 'fecha_fin', 'cuota', 'modo_id', 'estado'];
+    protected $fillable = ['nombre_sesion', 'fecha_inicio', 'fecha_fin', 'cuota', 'qrcobro', 'modo_id', 'estado'];
 
 
     /**

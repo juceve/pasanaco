@@ -2,8 +2,8 @@
 @section('css')
     <style>
         /* ===========================
-                           BASE STYLES
-                        ============================ */
+                               BASE STYLES
+                            ============================ */
         * {
             margin: 0;
             padding: 0;
@@ -27,8 +27,8 @@
         }
 
         /* ===========================
-                           HEADER
-                        ============================ */
+                               HEADER
+                            ============================ */
         .dashboard-header {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(14px);
@@ -104,8 +104,8 @@
         }
 
         /* ===========================
-                           STATS CARDS
-                        ============================ */
+                               STATS CARDS
+                            ============================ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -163,8 +163,8 @@
         }
 
         /* ===========================
-                           ACTION BUTTONS
-                        ============================ */
+                               ACTION BUTTONS
+                            ============================ */
         .actions-section {
             margin-bottom: 30px;
         }
@@ -233,8 +233,8 @@
         }
 
         /* ===========================
-                           RECENT ACTIVITY
-                        ============================ */
+                               RECENT ACTIVITY
+                            ============================ */
         .content-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -314,8 +314,8 @@
         }
 
         /* ===========================
-                           RESPONSIVE
-                        ============================ */
+                               RESPONSIVE
+                            ============================ */
         @media (max-width: 768px) {
             .dashboard-header {
                 flex-direction: column;
@@ -352,8 +352,8 @@
         }
 
         /* ===========================
-                           LOGOUT MODAL
-                        ============================ */
+                               LOGOUT MODAL
+                            ============================ */
         .logout-btn {
             background: rgba(255, 71, 87, 0.2);
             border: 1px solid rgba(255, 71, 87, 0.3);
@@ -410,36 +410,6 @@
                 @endif
             </div>
 
-            <!-- Statistics Cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-number">{{ $participantes }}</div>
-                    <div class="stat-label">Participantes</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-circle-play"></i>
-                    </div>
-                    <div class="stat-number">{{ $sesionesActivas }}</div>
-                    <div class="stat-label">Sesiones Activas</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="stat-number">{{ $sesiones }}</div>
-                    <div class="stat-label">Total Sesiones Creadas</div>
-                </div>
-
-
-            </div>
-
-
             <!-- Quick Actions -->
             <div class="actions-section">
                 <h2 class="section-title">
@@ -488,6 +458,38 @@
                 </a> --}}
                 </div>
             </div>
+
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number">{{ $participantes }}</div>
+                    <div class="stat-label">Participantes</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-circle-play"></i>
+                    </div>
+                    <div class="stat-number">{{ $sesionesActivas }}</div>
+                    <div class="stat-label">Sesiones Activas</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-number">{{ $sesiones }}</div>
+                    <div class="stat-label">Total Sesiones Creadas</div>
+                </div>
+
+
+            </div>
+
+
+
 
 
 

@@ -55,6 +55,16 @@
                                 <div class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></div>
                             @enderror
                         </div>
+                        <div class="form-group mb-2 mb20">
+                            <label class="form-label" for="qrcobro">Qr de Cobro</label>
+                            <input type="file" class="form-control" wire:model="qrcobro">
+                            <div class="mt-2">
+                                @if ($qrcobro)
+                                    <small class="form-label">Vista previa:</small>
+                                    <img class="img-fluid" src="{{ $qrcobro->temporaryUrl() }}">
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card mt-3">
@@ -88,15 +98,16 @@
                             <div class="col-12 col-xl-5 d-grid mb-2">
                                 <button class="btn btn-outline-success" wire:click="addTodosParticipantes()">
                                     Agregar todos <i class="fas fa-check-double"></i>
-                                    </button>
+                                </button>
 
                             </div>
-                            
+
                         </div>
-                        
+
                         <div class="table-responsive mt-1">
                             @error('arrayParticipantes')
-                                <small class="text-danger"><i class="fas fa-exclamation-circle"></i> Debe seleccionar al menos un participante.</small>
+                                <small class="text-danger"><i class="fas fa-exclamation-circle"></i> Debe seleccionar al
+                                    menos un participante.</small>
                             @enderror
                             @if (count($arrayParticipantes))
                                 <table class="table table-sm table-striped">
