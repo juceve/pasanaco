@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\DescargasController;
 use App\Http\Controllers\HomeController;
 use App\Models\Sesion;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 Auth::routes(['register' => false]);
 Route::get('/', function () {
@@ -25,5 +27,4 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
-
-Route::get('descarga-qr/{sesion_id}',[HomeController::class,"descargarQr"])->name('sesiones.descargaqr');
+Route::get('descarga-qr/{sesion_id}',[DescargasController::class,"descargarQr"])->name('sesiones.descargaqr');

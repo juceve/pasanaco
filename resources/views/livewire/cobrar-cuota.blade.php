@@ -3,7 +3,7 @@
         Cobrar Cuotas
     @endsection
     <div class="container fluid mb-3">
-        <h5>Cobrar Cuotas</h5>
+        <h5>Cobrar Cuotas <br> <small style="font-size: 12px;">{{ $sesion->nombre_sesion }}</small></h5>
     </div>
 
     @if (!$sesion->qrcobro)
@@ -134,9 +134,13 @@
     </div>
 </div>
 @section('js')
+<script>
+    var param_nro = '';
+</script>
     <script>
         Livewire.on('openModalCobros', nro => {
             document.getElementById('nrocuota').textContent = nro;
+            param_nro= nro;
             const modal = new bootstrap.Modal(document.getElementById('modalCobros'));
             modal.show();
 
@@ -161,7 +165,7 @@ Puedes ver o descargar el QR aquí:
             const mensaje = `Hola! *${nombre}*, te envío la siguiente información:
 
 *COBRO DE PASANACO*
-Número: *${nro}*
+Número: *${param_nro}*
 Sesión: {{ $sesion->nombre_sesion }}
 Monto Bs.: *${monto}*
 ${imgUrl}
